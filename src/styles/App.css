@@ -4,3 +4,9 @@
 .product {
     margin:2%;
 }
+.color {
+     display: inline-block;
+}
+.colorFilter {
+    display: block;
+}
