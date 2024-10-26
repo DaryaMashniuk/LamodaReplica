@@ -1,14 +1,15 @@
-export function ButtonFilter({ label, selectedValue, setSelectedValue, otherValues, isPrice = false, placeHolder }) {
+export function ButtonFilter({ label, selectedValue, setSelectedValue,isPrice,placeHolder }) {
   return (
-    <div>
-      {label === "nameSearch" || label === "PriceSearch" ? (
-        label === "nameSearch" ? (
+    <>
+        {isPrice ? (
           <input
             value={selectedValue}
             onChange={(e) => {
               setSelectedValue(e.target.value);
             }}
             placeholder={placeHolder}
+            type="number"
+            className="priceFilter"
           />
         ) : (
           <input
@@ -17,24 +18,10 @@ export function ButtonFilter({ label, selectedValue, setSelectedValue, otherValu
               setSelectedValue(e.target.value);
             }}
             placeholder={placeHolder}
-            type="number"
+            className="search"
           />
-        )
-      ) : (
-        <button
-          style={{
-            background: selectedValue === true ? "grey" : "white",
-          }}
-          value={selectedValue}
-          onClick={(e) => {
-            setSelectedValue(!selectedValue);
-            otherValues.forEach(([setOtherValue]) => setOtherValue(false));
-          }}
-        >
-          {label}
-        </button>
-      )}
-    </div>
+        )}
+    </>
   );
 }
 

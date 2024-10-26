@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import Chance from 'chance'
-import { colors } from "./constants";
-import { categories } from "./constants";
-import { maxPrice } from "./constants";
-import { minPrice } from "./constants";
+import { COLORS } from "./constants";
+import { CATEGORIES} from "./constants";
+import { MAXPRICE } from "./constants";
+import { MINPRICE } from "./constants";
+import { IMAGES } from "./constants";
 const chance = new Chance();
 
-export const generateProducts = (n = 10) => {
+export const generateProducts = (n = 100) => {
     const products = [];
   
     for (let i = 0; i < n; i++) {
@@ -15,22 +16,19 @@ export const generateProducts = (n = 10) => {
     return products;
   };
 
-    const generateProduct = () => ({
+  const generateProduct = () => ({
     id: uuidv4(),
-    name: getName(),
-    description: getDescription(),
+    name: chance.word(),
+    description: chance.sentence(),
     color: getColor(),
     category: getCategory(),
     price: getPrice(),
     rating: getRating(),
+    image: getImage()
+});
 
-  });
-
-  const getName = () => chance.word()
-  const getDescription = () => chance.sentence()
-  const getColor = () => {
-    return colors[Math.floor(Math.random() * 5)];
-  };
-  const getCategory=()=> categories[Math.floor(Math.random()*10)] 
-  const getPrice=()=> Math.floor(Math.random()*(maxPrice-minPrice)+minPrice)
-  const getRating=()=> (Math.random()*5).toFixed(1)
+const getColor = () => chance.pickone(COLORS); 
+const getCategory = () => chance.pickone(CATEGORIES); 
+const getPrice = () => chance.integer({ min: MINPRICE, max: MAXPRICE }); 
+const getRating = () => chance.floating({ min: 0, max: 5, fixed: 1 }); 
+const getImage = () => chance.pickone(IMAGES); ; 

@@ -7,10 +7,9 @@ export function CheckboxFilter({ label, options, selectedOptions, setSelectedOpt
       }
     };
     return (
-      <div>
-        <div>
-          <h3>{label} :</h3>
-          <div>
+      <div className="filterColor">
+          <h3 className="filterHeader">{label}</h3>
+          <div className="filterBody">
             {options.map((option) => (
               <label key={option} className="ColorFilter">
                 <input
@@ -18,12 +17,12 @@ export function CheckboxFilter({ label, options, selectedOptions, setSelectedOpt
                   value={option}
                   checked={selectedOptions.includes(option)}
                   onChange={() => handleCheckBoxChange(option)}
+                  style={{ backgroundColor: option }}
                 />
-                <div className="color" style={{ backgroundColor: option }}>{option}</div>
+                <div className="color">{option}</div>
               </label>
             ))}
           </div>
-        </div>
       </div>
     );
   }
