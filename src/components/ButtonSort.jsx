@@ -1,22 +1,19 @@
+import React, { memo } from "react";
 
-export function ButtonSort({ label, selectedValue, setSelectedValue, otherValues}) {
+const ButtonSort = memo(({ label, selectedValue, setSelectedValue }) => {
   return (
     <div className="sortButton">
-        <button
-          style={{
-            background: selectedValue === true ? `black` : `white`,
-            color: selectedValue === true ? ` white` : "black",
-          }}
-          value={selectedValue}
-          onClick={(e) => {
-            setSelectedValue(!selectedValue);
-            otherValues.forEach(([setOtherValue]) => setOtherValue(false));
-          }}
-        >
-          {label}
-        </button>
+      <button
+        style={{
+          background: selectedValue ? "black" : "white",
+          color: selectedValue ? "white" : "black",
+        }}
+        onClick={() => setSelectedValue(!selectedValue)}
+      >
+        {label}
+      </button>
     </div>
   );
-}
+});
 
 export default ButtonSort;

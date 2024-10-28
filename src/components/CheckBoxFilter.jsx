@@ -1,29 +1,31 @@
-export function CheckboxFilter({ label, options, selectedOptions, setSelectedOptions }) {
-    const handleCheckBoxChange = (option) => {
-      if (selectedOptions.includes(option)) {
-        setSelectedOptions(selectedOptions.filter((item) => item != option));
-      } else {
-        setSelectedOptions([...selectedOptions, option]);
-      }
-    };
-    return (
-      <div className="filterColor">
-          <h3 className="filterHeader">{label}</h3>
-          <div className="filterBody">
-            {options.map((option) => (
-              <label key={option} className="ColorFilter">
-                <input
-                  type="checkbox"
-                  value={option}
-                  checked={selectedOptions.includes(option)}
-                  onChange={() => handleCheckBoxChange(option)}
-                  style={{ backgroundColor: option }}
-                />
-                <div className="color">{option}</div>
-              </label>
-            ))}
-          </div>
+import React, { memo } from "react";
+
+const CheckboxFilter = memo(({ label, options, selectedValue = [], setSelectedValue }) => {
+  const handleCheckBoxChange = (option) => {
+    const newSelectedOptions = selectedValue.includes(option)
+      ? selectedValue.filter((item) => item !== option)
+      : [...selectedValue, option];
+    setSelectedValue(newSelectedOptions);
+  };
+
+  return (
+    <div className="checkbox">
+      <h3 className="filterHeader">{label}</h3>
+      <div className="filterBody">
+        {options.map((option) => (
+          <label key={option} className="checkbox-filter">
+            <input
+              type="checkbox"
+              value={option}
+              checked={selectedValue.includes(option)}
+              onChange={() => handleCheckBoxChange(option)}
+            />
+            <div className="color">{option}</div>
+          </label>
+        ))}
       </div>
-    );
-  }
- export default CheckboxFilter
+    </div>
+  );
+});
+
+export default CheckboxFilter;

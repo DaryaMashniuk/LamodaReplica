@@ -1,4 +1,5 @@
-const ProductItem = (props) => {
+import React, { memo } from "react";
+const ProductItem = memo((props) => {
   const { product } = props;
   return (
     <div className="product">
@@ -24,6 +25,5 @@ const ProductItem = (props) => {
       </div>
     </div>
   );
-};
-
+})
 export default ProductItem;

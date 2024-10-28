@@ -28,3 +28,5 @@ export const IMAGES= [
     "src/assets/images/11.jpg",
     "src/assets/images/12.jpg",
 ]
+
+export const ITEMS_PER_PAGE = 20;

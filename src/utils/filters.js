@@ -1,8 +1,9 @@
-// utils/filters.js
 
+import { COLORS } from "./constants";
 import ButtonFilter from "../components/ButtonFilter";
 import CheckboxFilter from "../components/CheckBoxFilter";
 import ButtonSort from "../components/ButtonSort";
+
 
 export function filterAndSortProducts(products, filtersConfig, filtersState) {
   return products
@@ -19,11 +20,12 @@ export function filterAndSortProducts(products, filtersConfig, filtersState) {
     });
 }
 
-// Конфигурация фильтров с указанием пользовательских компонентов
 export const filtersConfig = [
   {
     key: "searchValue",
+    initialValue: "",
     label: "Поиск",
+    type:"text",
     placeholder: "Введите название или описание",
     component: ButtonFilter,
     filterFunction: (product, searchValue) =>
@@ -33,8 +35,9 @@ export const filtersConfig = [
   },
   {
     key: "selectedColors",
+    initialValue: [],
     label: "По цвету",
-    options: ["red", "blue", "green"],
+    options: COLORS,
     component: CheckboxFilter,
     filterFunction: (product, selectedColors) =>
       selectedColors.length === 0 ||
@@ -42,34 +45,59 @@ export const filtersConfig = [
   },
   {
     key: "minPrice",
+    initialValue: "",
     label: "Цена от",
-    placeholder: "Минимальная цена",
+    placeholder: "От",
+    type:"Number",
     component: ButtonFilter,
     filterFunction: (product, minPrice) => minPrice === "" || product.price > minPrice,
   },
   {
     key: "maxPrice",
+    initialValue: "",
     label: "Цена до",
-    placeholder: "Максимальная цена",
+    placeholder: "До",
+    type:"Number",
     component: ButtonFilter,
     filterFunction: (product, maxPrice) => maxPrice === "" || product.price < maxPrice,
   },
-  {
-    key: "popularFirst",
-    label: "Сначала популярные",
-    component: ButtonSort,
-    filterFunction: () => true,
-  },
-  {
-    key: "cheapFirst",
-    label: "Сначала дешевые",
-    component: ButtonSort,
-    filterFunction: () => true,
-  },
-  {
-    key: "expensiveFirst",
-    label: "Сначала дорогие",
-    component: ButtonSort,
-    filterFunction: () => true,
-  },
+
 ];
+
+export const SortsConfig = [
+    {
+        key: "popularFirst",
+        initialValue: true,
+        label: "Сначала популярные",
+        component: ButtonSort,
+        filterFunction: () => true,
+      },
+      {
+        key: "cheapFirst",
+        initialValue: false,
+        label: "Сначала дешевые",
+        component: ButtonSort,
+        filterFunction: () => true,
+      },
+      {
+        key: "expensiveFirst",
+        initialValue: false,
+        label: "Сначала дорогие",
+        component: ButtonSort,
+        filterFunction: () => true,
+      },
+]
+const filtersStateFromConfig = filtersConfig.reduce((acc,{key,initialValue})=> {
+  acc[key] = initialValue;
+  return acc;
+},{}) 
+
+const sortsStateFromConfig = SortsConfig.reduce((acc,{key,initialValue})=> {
+  acc[key] = initialValue;
+  return acc;
+},{}) 
+
+export const filtersInitialState = {
+  ...filtersStateFromConfig,
+  ...sortsStateFromConfig
+}
